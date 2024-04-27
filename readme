@@ -1,0 +1,6 @@
+Запустить тест из папки, запускается только 1 функция:
+/Users/shchetnikov.ra/PycharmProjects/LearnQA_Python_API/Lesson_three/task_one.py
+
+python -m pytest task_one.py -k "test_check_math"
+#тесты запускаются так: test_check_math*
+
