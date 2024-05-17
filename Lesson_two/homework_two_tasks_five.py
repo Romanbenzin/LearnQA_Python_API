@@ -11,7 +11,6 @@ for password_2019 in list_of_passwords_2019:
     #Значение куки:
     cookie_value = request.cookies.get("auth_cookie")
     #print(cookie_value)
-    #request = requests.post(auth_url, data={"password":"welcome","equals":True})
     #print(request.text)
     request2 = requests.get("https://playground.learnqa.ru/ajax/api/check_auth_cookie", cookies={"auth_cookie":cookie_value})
     #print(request2.text)

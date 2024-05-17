@@ -4,3 +4,7 @@
 python -m pytest task_one.py -k "test_check_math"
 #тесты запускаются так: test_check_math*
 
+Запросы берутся с https://playground.learnqa.ru/api/map
+
+запустить определенный тест:
+python -m pytest text_examples.py -k "test_negative_check_math"
