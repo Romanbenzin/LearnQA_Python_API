@@ -1,0 +1,18 @@
+names = [
+    'leha',
+    'neleha',
+    'superleha'
+]
+
+age = [
+    12,
+    43,
+    54
+]
+
+#for i in range(len(names)):
+#    print(f"{names[i]}:{age[i]}")
+
+for i in names:
+    index = names.index(i)
+    print(f"{i}:{age[index]}")
