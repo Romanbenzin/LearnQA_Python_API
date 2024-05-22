@@ -1,10 +1,14 @@
 Запустить тест из папки, запускается только 1 функция:
 /Users/shchetnikov.ra/PycharmProjects/LearnQA_Python_API/Lesson_three/task_one.py
 
-python -m pytest task_one.py -k "test_check_math"
+
 #тесты запускаются так: test_check_math*
+python -m pytest task_one.py -k "test_check_math"
 
 Запросы берутся с https://playground.learnqa.ru/api/map
 
-запустить определенный тест:
+#запустить определенный тест:
 python -m pytest text_examples.py -k "test_negative_check_math"
+
+#Запустить тест с выводом print, нужно передать параметр -s
+python -m pytest -s test_user_register.py -k test_create_user_successfully
