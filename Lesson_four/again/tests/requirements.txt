@@ -1,0 +1,5 @@
+allure-pytest
+requests
+pytest
+
+# установить все библиотеки pip3 install -r requirements.txt
