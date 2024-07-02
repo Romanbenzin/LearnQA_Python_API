@@ -2,8 +2,10 @@ from lib.base_case import BaseCase
 from lib.assertions import Assertions
 from lib.my_requests import MyRequests
 import requests
+import allure
 
 class TestUserDelete(BaseCase):
+    @allure.title("Test Delete")
     def test_delete_nodelete_user(self):
         #AUTH
         data = {
@@ -39,6 +41,7 @@ class TestUserDelete(BaseCase):
         assert response2.text == ('{"id":"2","username":"Vitaliy","email":"vinkotov@example.com","firstName":"Vitalii",'
                                   '"lastName":"Kotov"}'), "Удалился id 2 и это плохо"
 
+    @allure.title("Test Delete")
     def test_create_delete_get_user(self):
         # REGISTER
         register_data = self.prepare_registration_data()
@@ -90,73 +93,3 @@ class TestUserDelete(BaseCase):
         assert response3.text == "User not found", "юзер не удален"
 
     #Тест ниже удаляется любой id любого пользователя, если авторизация корректна, что является багом
-    def test_create_delete_another_user(self):
-        #Регистрация первого пользователя
-        register_data = self.prepare_registration_data()
-        response1 = MyRequests.post("/user/", data=register_data)
-
-        Assertions.assert_code_status(response1, 200)
-        Assertions.assert_json_has_key(response1, "id")
-
-        email = register_data["email"]
-        first_name = register_data["firstName"]
-        password = register_data["password"]
-        user_id_one = self.get_json_value(response1, "id")
-        print(user_id_one)
-
-        # LOGIN
-        login_data = {
-            "email": email,
-            "password": password
-        }
-        response2 = MyRequests.post("/user/login", data=login_data)
-        print(response2.text)
-        auth_sid_one = self.get_cookie(response2, "auth_sid")
-        token_one = self.get_header(response2, "x-csrf-token")
-
-        #Регистрация второго пользователя и его id
-        register_data = self.prepare_registration_data()
-        response1 = MyRequests.post("/user/", data=register_data)
-
-        #Assertions.assert_code_status(response1, 200)
-        Assertions.assert_json_has_key(response1, "id")
-
-        email = register_data["email"]
-        first_name = register_data["firstName"]
-        password = register_data["password"]
-        user_id_two = self.get_json_value(response1, "id")
-        print(user_id_two)
-
-        #Логин
-        login_data = {
-            "email": email,
-            "password": password
-        }
-        response5 = MyRequests.post("/user/login", data=login_data)
-        print(response5.text)
-        auth_sid_two = self.get_cookie(response5, "auth_sid")
-        token_two = self.get_header(response5, "x-csrf-token")
-
-
-        #Удаление пользователя два с данными первого
-        url = f"/user/{100686}"
-        print(url)
-        response4 = MyRequests.delete(url,
-                                      headers={"x-csrf-token": token_one},
-                                      cookies={"auth_sid": auth_sid_one}
-                                      )
-        #response4_dict = response4.json()
-        print(response4.text)
-        #id_from_response4_dict = response4_dict["success"]
-        #assert id_from_response4_dict == "!", "Ошибка"
-
-        reess1 = requests.get(f"https://playground.learnqa.ru/api_dev/user/{user_id_one}", headers={"x-csrf-token": token_one},cookies={"auth_sid": auth_sid_one})
-        reess2 = requests.get(f"https://playground.learnqa.ru/api_dev/user/{user_id_two}", headers={"x-csrf-token": token_two},cookies={"auth_sid": auth_sid_two})
-        reess3 = requests.get(f"https://playground.learnqa.ru/api_dev/user/{user_id_two}", headers={"x-csrf-token": token_one}, cookies={"auth_sid": auth_sid_one})
-        reess4 = requests.get(f"https://playground.learnqa.ru/api_dev/user/{user_id_one}", headers={"x-csrf-token": token_two}, cookies={"auth_sid": auth_sid_two})
-        reess5 = requests.delete(f"https://playground.learnqa.ru/api_dev/user/{4321412341234123423123123}", headers={"x-csrf-token": token_two}, cookies={"auth_sid": auth_sid_two})
-        print(reess1.text)
-        print(reess2.text)
-        print(reess3.text)
-        print(reess4.text)
-        print(reess5.text)

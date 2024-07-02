@@ -2,9 +2,9 @@ import pytest
 from lib.base_case import BaseCase
 from lib.assertions import Assertions
 from lib.my_requests import MyRequests
-
+import allure
 class TestUserRegister(BaseCase):
-
+    @allure.title("Test Register")
     def test_create_user_successfully(self):
         data = self.prepare_registration_data(email=None, firstName=None)
 
@@ -12,6 +12,8 @@ class TestUserRegister(BaseCase):
 
         Assertions.assert_code_status(response, 200)
         Assertions.assert_json_has_key(response, "id")
+
+    @allure.title("Test Register")
     def test_create_user_with_existing_email(self):
         email = "vinkotov@example.com"
         data = self.prepare_registration_data(email, firstName=None)

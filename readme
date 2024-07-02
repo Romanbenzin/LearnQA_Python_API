@@ -20,3 +20,7 @@ python -m pytest text_examples.py -k "test_negative_check_math"
 
 #Запустить тест с выводом print, нужно передать параметр -s
 python -m pytest -s test_user_register.py -k test_create_user_successfully
+
+#Запустить тесты с allure
+python -m pytest -s --alluredir=test_results/
+allure serve test_results/

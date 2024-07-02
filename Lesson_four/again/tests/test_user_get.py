@@ -8,7 +8,7 @@ import random
 class TestUserGet(BaseCase):
     def test_get_user_details_not_auth(self):
         response = MyRequests.get("/user/2")
-        print(response.text)
+
         Assertions.assert_json_has_key(response, "username")
         Assertions.assert_json_not_key(response, "email")
         Assertions.assert_json_not_key(response, "first_name")
